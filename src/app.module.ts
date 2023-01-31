@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import * as fs from 'fs';
 
 import { RoomsModule } from './rooms/rooms.module';
 import { Room } from './rooms/entities/room.entity';
@@ -17,7 +18,11 @@ import { Room } from './rooms/entities/room.entity';
       database: process.env.DATABASE_NAME,
       entities: [Room],
       synchronize: true,
-      dropSchema: true,
+      ssl: {
+        ca: fs.readFileSync(process.env.SSL_CA_CERTIFICATES),
+      },
+
+      autoLoadEntities: true,
     }),
     RoomsModule,
   ],
