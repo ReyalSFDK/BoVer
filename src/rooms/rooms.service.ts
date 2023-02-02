@@ -24,7 +24,7 @@ export class RoomsService {
   findLastTeen() {
     return this.roomRepository.find({
       order: {
-        createdAt: 'DESC',
+        id: 'DESC',
       },
       take: 10,
       skip: 0,
