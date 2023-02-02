@@ -19,13 +19,13 @@ export class RoomsController {
     return this.roomsService.create(createRoomDto);
   }
 
-  @NEST.Get()
+  @NEST.Get('lastTeen')
   @DOC.ApiOkResponse({
     type: Room,
     isArray: true,
   })
   findAll(): Promise<Room[]> {
-    return this.roomsService.findAll();
+    return this.roomsService.findLastTeen();
   }
 
   @NEST.Get(':id')
@@ -33,7 +33,17 @@ export class RoomsController {
     type: Room,
   })
   @DOC.ApiNotFoundResponse()
-  findOne(@NEST.Param('id') id: string) {
-    return this.roomsService.findOne(id);
+  async findOne(@NEST.Param('id') id: string) {
+    if (!id) {
+      throw new NEST.NotFoundException(404, 'ID is Empty');
+    }
+
+    const room = await this.roomsService.findOne(id);
+
+    if (!room) {
+      throw new NEST.NotFoundException(404, 'Room not found');
+    }
+
+    return room;
   }
 }

@@ -21,7 +21,17 @@ export class RoomsService {
     return this.roomRepository.find();
   }
 
-  findOne(id: string) {
+  findLastTeen() {
+    return this.roomRepository.find({
+      order: {
+        createdAt: 'DESC',
+      },
+      take: 10,
+      skip: 0,
+    });
+  }
+
+  async findOne(id: string) {
     return this.roomRepository.findOneBy({ id });
   }
 }

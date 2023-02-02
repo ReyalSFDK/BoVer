@@ -6,6 +6,11 @@ import * as fs from 'fs';
 import { RoomsModule } from './rooms/rooms.module';
 import { Room } from './rooms/entities/room.entity';
 
+const ssl =
+  process.env.NODE === 'production'
+    ? { ca: fs.readFileSync(process.env.SSL_CA_CERTIFICATES) }
+    : undefined;
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -18,10 +23,7 @@ import { Room } from './rooms/entities/room.entity';
       database: process.env.DATABASE_NAME,
       entities: [Room],
       synchronize: true,
-      ssl: {
-        ca: fs.readFileSync(process.env.SSL_CA_CERTIFICATES),
-      },
-
+      ssl,
       autoLoadEntities: true,
     }),
     RoomsModule,

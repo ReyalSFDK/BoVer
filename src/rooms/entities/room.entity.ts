@@ -14,4 +14,7 @@ export class Room {
   @ORM.Column()
   @DOC.ApiProperty()
   videoURL: string;
+
+  @ORM.CreateDateColumn()
+  public createdAt: Date;
 }
