@@ -22,12 +22,17 @@ export class RoomsController {
   @NEST.Get()
   @DOC.ApiOkResponse({
     type: Room,
+    isArray: true,
   })
   findAll(): Promise<Room[]> {
     return this.roomsService.findAll();
   }
 
   @NEST.Get(':id')
+  @DOC.ApiOkResponse({
+    type: Room,
+  })
+  @DOC.ApiNotFoundResponse()
   findOne(@NEST.Param('id') id: string) {
     return this.roomsService.findOne(id);
   }
