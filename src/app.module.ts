@@ -7,7 +7,7 @@ import { RoomsModule } from './rooms/rooms.module';
 import { Room } from './rooms/entities/room.entity';
 
 const ssl =
-  process.env.NODE === 'production'
+  process.env.NODE_ENV === 'production'
     ? { ca: fs.readFileSync(process.env.SSL_CA_CERTIFICATES) }
     : undefined;
 
